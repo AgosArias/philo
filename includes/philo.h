@@ -14,6 +14,8 @@
 # define PHILO_H
 
 # include <studio.h>
+# include <unistd.h>
+
 
 typedef struct s_philo
 {
