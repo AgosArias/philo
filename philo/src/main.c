@@ -6,11 +6,29 @@
 /*   By: aarias-d < aarias-d@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 18:01:11 by aarias-d          #+#    #+#             */
-/*   Updated: 2025/10/26 19:05:44 by aarias-d         ###   ########.fr       */
+/*   Updated: 2025/10/26 20:42:28 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	ft_destroy_data(t_data *data)
+{
+	int	i;
+
+	i = -1;
+	if (!data)
+		return ;
+	if (data->philo)
+		free(data->philo);
+	if (data->forks)
+	{
+		while (++i < data->num_philo)
+			pthread_mutex_destroy(&data->forks[i]);
+		free(data->forks);
+	}
+}
+
 
 int	main(int argc, char **argv)
 {
@@ -25,6 +43,6 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	if (ft_init_philos(&data) == 1)
 		exit(EXIT_FAILURE);
-
+	ft_destroy_data(&data);
 	return (0);
 }
