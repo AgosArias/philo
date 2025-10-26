@@ -6,11 +6,24 @@
 /*   By: aarias-d < aarias-d@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 17:15:20 by aarias-d          #+#    #+#             */
-/*   Updated: 2025/10/26 19:25:07 by aarias-d         ###   ########.fr       */
+/*   Updated: 2025/10/26 20:43:01 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	ft_init_mutexes(t_data *data, int philo)
+{
+	int	i;
+
+	data->forks = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * philo);
+	if (!data->forks)
+		return (1);
+	i = -1;
+	while (++i < philo)
+		pthread_mutex_init(&data->forks[i], NULL);
+	return (0);
+}
 
 int	ft_init_philos(t_data *data)
 {
@@ -44,6 +57,8 @@ int	ft_add_data(t_data *data, int argc, char **argv)
 	}
 	else
 		data->number_times_eat = 0;
+	if (data->num_philo < 1 || ft_init_mutexes(data, data->num_philo) == 1)
+		return (1);
 	return (0);
 }
 
