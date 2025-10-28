@@ -7,6 +7,8 @@ INCLUDES = -I includes
 SRC_DIR = src
 SRC = 	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/init.c \
+		$(SRC_DIR)/routine.c \
+		$(SRC_DIR)/actions.c \
 		$(SRC_DIR)/utils.c 
 
 DEPS = includes/philo.h
