@@ -6,9 +6,11 @@
 /*   By: aarias-d < aarias-d@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 17:51:47 by aarias-d          #+#    #+#             */
-/*   Updated: 2025/10/26 17:51:50 by aarias-d         ###   ########.fr       */
+/*   Updated: 2025/10/28 15:13:33 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "philo.h"
 
 int	ft_isdigit(int c)
 {
@@ -55,4 +57,15 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (num * symbol);
+}
+
+int	get_time(void)
+{
+	struct timeval	tv;
+	int				time;
+
+	if (gettimeofday(&tv, NULL))
+		return (1);
+	time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (time);
 }
