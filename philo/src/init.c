@@ -6,22 +6,31 @@
 /*   By: aarias-d < aarias-d@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 17:15:20 by aarias-d          #+#    #+#             */
-/*   Updated: 2025/10/26 20:43:01 by aarias-d         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:17:25 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_init_mutexes(t_data *data, int philo)
+int	ft_init_mutexes(t_data *data)
 {
 	int	i;
 
-	data->forks = (pthread_mutex_t *) malloc(sizeof(pthread_mutex_t) * philo);
+	data->forks = malloc(sizeof(pthread_mutex_t) * data->num_philo);
 	if (!data->forks)
 		return (1);
 	i = -1;
-	while (++i < philo)
-		pthread_mutex_init(&data->forks[i], NULL);
+	while (++i < data->num_philo)
+	{
+		if (pthread_mutex_init(&data->forks[i], NULL) != 0)
+		{
+			while (i-- > 0)
+				pthread_mutex_destroy(&data->forks[i]);
+			free(data->forks);
+			data->forks = NULL;
+			return (1);
+		}
+	}
 	return (0);
 }
 
@@ -42,6 +51,8 @@ int	ft_init_philos(t_data *data)
 
 int	ft_add_data(t_data *data, int argc, char **argv)
 {
+	struct timeval	tv;
+
 	data->num_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
@@ -57,8 +68,12 @@ int	ft_add_data(t_data *data, int argc, char **argv)
 	}
 	else
 		data->number_times_eat = 0;
-	if (data->num_philo < 1 || ft_init_mutexes(data, data->num_philo) == 1)
+	if (data->num_philo < 1 || ft_init_mutexes(data) == 1)
 		return (1);
+	data->all_alive = 1;
+	if (gettimeofday(&tv, NULL))
+		return (1);
+	data->time_start = tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	return (0);
 }
 
