@@ -6,7 +6,7 @@
 /*   By: aarias-d < aarias-d@student.42malaga.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 18:01:11 by aarias-d          #+#    #+#             */
-/*   Updated: 2025/10/26 20:42:28 by aarias-d         ###   ########.fr       */
+/*   Updated: 2025/10/28 14:14:46 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	ft_destroy_data(t_data *data)
 int	main(int argc, char **argv)
 {
 	t_data	data;
+	t_philo	*p;
+	int		i;
 
 	if (argc != 5 && argc != 6)
 	{
@@ -43,6 +45,14 @@ int	main(int argc, char **argv)
 		exit(EXIT_FAILURE);
 	if (ft_init_philos(&data) == 1)
 		exit(EXIT_FAILURE);
+	i = 0;
+	while (i < data.num_philo)
+	{
+		p = &data.philo[i];
+		if (pthread_create(&p->thread, NULL, ft_routine, p) != 0)
+			break ;
+		i++;
+	}
 	ft_destroy_data(&data);
 	return (0);
 }
