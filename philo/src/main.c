@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarias-d < aarias-d@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aarias-d <aarias-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 18:01:11 by aarias-d          #+#    #+#             */
-/*   Updated: 2025/10/28 14:14:46 by aarias-d         ###   ########.fr       */
+/*   Updated: 2025/11/18 19:01:04 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int	main(int argc, char **argv)
 	}
 	if (ft_init_data(&data, argc, argv) == 1)
 		exit(EXIT_FAILURE);
+
 	if (ft_init_philos(&data) == 1)
 		exit(EXIT_FAILURE);
 	i = 0;
@@ -53,6 +54,7 @@ int	main(int argc, char **argv)
 			break ;
 		i++;
 	}
+
 	ft_destroy_data(&data);
 	return (0);
 }

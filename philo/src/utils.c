@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarias-d < aarias-d@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aarias-d <aarias-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 17:51:47 by aarias-d          #+#    #+#             */
-/*   Updated: 2025/10/28 15:13:33 by aarias-d         ###   ########.fr       */
+/*   Updated: 2025/11/18 17:46:39 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,9 @@ int	ft_atoi(const char *str)
 	}
 	else if (str[i] == '+')
 		i++;
-	while (str[i] != '\0')
+	while (ft_isdigit(str[i]))
 	{
-		if (ft_isdigit(str[i]) == 1 && num == 0)
-			num = str[i] - '0';
-		else if (ft_isdigit(str[i]) == 1)
-			num = num * 10 + (str[i] - '0');
-		else
-			return (0);
+		num = num * 10 + (str[i] - '0');
 		i++;
 	}
 	return (num * symbol);

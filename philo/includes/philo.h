@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarias-d < aarias-d@student.42malaga.co    +#+  +:+       +#+        */
+/*   By: aarias-d <aarias-d@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 19:25:33 by aarias-d          #+#    #+#             */
-/*   Updated: 2025/10/28 15:50:04 by aarias-d         ###   ########.fr       */
+/*   Updated: 2025/11/18 18:43:26 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,17 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-struct	s_data;
+typedef struct s_data	t_data;
 
 typedef struct s_philo
 {
 	int				id;
-	int				eat;
+	long			eat;
 	int				think;
 	int				sleep;
 	pthread_t		thread;
 	pthread_attr_t	attr;
-	t_data			data;
+	t_data			*data;
 	pthread_mutex_t	*lf;
 	pthread_mutex_t	*rf;
 }	t_philo;
