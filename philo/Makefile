@@ -31,3 +31,6 @@ fclean:	clean
 	rm $(NAME)
 
 re: fclean all
+
+test: re
+	./$(NAME) 5 800 200 200 7
