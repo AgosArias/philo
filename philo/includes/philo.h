@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarias-d <aarias-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 19:25:33 by aarias-d          #+#    #+#             */
-/*   Updated: 2025/11/18 18:43:26 by aarias-d         ###   ########.fr       */
+/*   Updated: 2026/01/04 23:58:01 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,12 @@ typedef struct s_data	t_data;
 typedef struct s_philo
 {
 	int				id;
+	long			last_meal;
+	int				meals_eaten;
 	long			eat;
-	int				think;
-	int				sleep;
+	long			think;
+	long			sleep;
 	pthread_t		thread;
-	pthread_attr_t	attr;
 	t_data			*data;
 	pthread_mutex_t	*lf;
 	pthread_mutex_t	*rf;
@@ -40,7 +41,6 @@ typedef struct s_data
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
-	int				number_times_eat;
 	int				all_alive;
 	long			time_start;
 	t_philo			*philo;
