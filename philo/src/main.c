@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarias-d <aarias-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/25 18:01:11 by aarias-d          #+#    #+#             */
-/*   Updated: 2025/11/18 19:01:04 by aarias-d         ###   ########.fr       */
+/*   Updated: 2026/01/05 00:17:41 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,41 @@ void	ft_destroy_data(t_data *data)
 		free(data->forks);
 	}
 }
+int	ft_launch_threads(t_data *data)
+{
+	int i;
 
+	i = 0;
+	while (i< data->num_philo)
+	{
+		if(pthread_create(&data->philo[i].thread, NULL, ft_routine, &data->philo[i]) != 0)
+		{
+			data->all_alive = 0;
+			while (--i >= 0)
+				pthread_join(data->philo[i].thread, NULL);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+static void	ft_join_threads(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->num_philo)
+	{
+		pthread_join(data->philo[i].thread, NULL);
+		i++;
+	}
+}
 
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	t_philo	*p;
-	int		i;
+	pthread_t	mon;
 
 	if (argc != 5 && argc != 6)
 	{
@@ -46,15 +74,20 @@ int	main(int argc, char **argv)
 
 	if (ft_init_philos(&data) == 1)
 		exit(EXIT_FAILURE);
-	i = 0;
-	while (i < data.num_philo)
+	if (ft_launch_threads(&data) == 1)
 	{
-		p = &data.philo[i];
-		if (pthread_create(&p->thread, NULL, ft_routine, p) != 0)
-			break ;
-		i++;
+		ft_destroy_data(&data);
+		return (1);
 	}
-
+	if (pthread_create(&mon, NULL, monitor, &data) != 0)
+	{
+		data.all_alive = 0;
+		ft_join_threads(&data);
+		ft_destroy_data(&data);
+		return (1);
+	}
+	pthread_join(mon, NULL);
+	ft_join_threads(&data);
 	ft_destroy_data(&data);
 	return (0);
 }
