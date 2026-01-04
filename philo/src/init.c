@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarias-d <aarias-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 17:15:20 by aarias-d          #+#    #+#             */
-/*   Updated: 2025/11/18 19:01:02 by aarias-d         ###   ########.fr       */
+/*   Updated: 2026/01/05 00:18:19 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,12 @@ int	ft_init_philos(t_data *data)
 		data->philo[i].id = i + 1;
 		data->philo[i].data = data;
 		data->philo[i].lf = &data->forks[i];
-		data->philo[i].rf = &data->forks[i + 1];
+		data->philo[i].rf = &data->forks[(i + 1) % data->num_philo];
+		data->philo[i].last_meal = data->time_start;
+		data->philo[i].meals_eaten = 0;
+		data->philo[i].eat = 0;
+		data->philo[i].think = 0;
+		data->philo[i].sleep = 0;
 		i++;
 	}
 	return (0);
@@ -60,18 +65,6 @@ int	ft_add_data(t_data *data, int argc, char **argv)
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
-
-	if (argc == 6)
-	{
-		data->number_times_eat = ft_atoi(argv[5]);
-		if (data->number_times_eat < 1)
-		{
-			write(2, "Invalid number of number_of_times_to_eat\n", 41);
-			return (1);
-		}
-	}
-	else
-		data->number_times_eat = 0;
 
 	if (data->num_philo < 1 || ft_init_mutexes(data) == 1)
 		return (1);
