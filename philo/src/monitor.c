@@ -6,7 +6,7 @@
 /*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/05 00:19:00 by aarias-d          #+#    #+#             */
-/*   Updated: 2026/01/05 08:23:49 by aarias-d         ###   ########.fr       */
+/*   Updated: 2026/01/05 08:54:09 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	*monitor(void *arg)
             break;
         }
         i++;
-        }
+    }
     usleep(1000);
+    return (NULL);
 }
