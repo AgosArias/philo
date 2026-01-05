@@ -6,7 +6,7 @@
 /*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 17:15:20 by aarias-d          #+#    #+#             */
-/*   Updated: 2026/01/05 08:52:12 by aarias-d         ###   ########.fr       */
+/*   Updated: 2026/01/05 09:09:20 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,20 @@ int	ft_add_data(t_data *data, int argc, char **argv)
 {
 	struct timeval	tv;
 
-	if (argc < 4 || argc > 5)
+	if (argc != 5 && argc != 6)
 		return (1);
 	data->num_philo = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
-
+	if (argc == 6)
+	{
+		data->number_times_eat = ft_atoi(argv[5]);
+		if (data->number_times_eat < 1)
+			return (1);
+	}
+	else
+		data->number_times_eat = 0;
 	if (data->num_philo < 1 || ft_init_mutexes(data) == 1)
 		return (1);
 	data->all_alive = 1;

@@ -6,7 +6,7 @@
 /*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 19:25:33 by aarias-d          #+#    #+#             */
-/*   Updated: 2026/01/04 23:58:01 by aarias-d         ###   ########.fr       */
+/*   Updated: 2026/01/05 09:08:44 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_data
 	int				time_to_die;
 	int				time_to_eat;
 	int				time_to_sleep;
+	int				number_times_eat;
 	int				all_alive;
 	long			time_start;
 	t_philo			*philo;
