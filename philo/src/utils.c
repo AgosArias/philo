@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aarias-d <aarias-d@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/26 17:51:47 by aarias-d          #+#    #+#             */
-/*   Updated: 2025/11/18 17:46:39 by aarias-d         ###   ########.fr       */
+/*   Updated: 2026/01/10 23:30:54 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,4 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (num * symbol);
-}
-
-int	get_time(void)
-{
-	struct timeval	tv;
-	int				time;
-
-	if (gettimeofday(&tv, NULL))
-		return (1);
-	time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
-	return (time);
 }
