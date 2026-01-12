@@ -6,7 +6,7 @@
 /*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 19:25:33 by aarias-d          #+#    #+#             */
-/*   Updated: 2026/01/05 09:08:44 by aarias-d         ###   ########.fr       */
+/*   Updated: 2026/01/12 22:26:07 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,8 @@ typedef struct s_philo
 	int				id;
 	long			last_meal;
 	int				meals_eaten;
-	long			eat;
-	long			think;
-	long			sleep;
 	pthread_t		thread;
 	t_data			*data;
-	pthread_mutex_t	*lf;
-	pthread_mutex_t	*rf;
 }	t_philo;
 
 typedef struct s_data
@@ -45,30 +40,25 @@ typedef struct s_data
 	int				all_alive;
 	long			time_start;
 	t_philo			*philo;
+	pthread_t		monitor;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	write_lock;
+	pthread_mutex_t	meal_lock;
+	pthread_mutex_t	state_lock;
 }		t_data;
 
-// --- init.c ---
-int		ft_init_data(t_data *data, int argc, char **argv);
-int		ft_init_philos(t_data *data);
+/* ---------     init.c ----------*/
+int	ft_init_data(t_data *data,  char *argv);
 
-// --- routine.c ---
-void	*ft_routine(void *arg);
-
-// --- actions.c ---
-void	ft_eat(t_philo *philo);
-void	ft_think(t_philo *philo);
-void	ft_sleep(t_philo *philo);
-
-// --- monitor.c ---
-void	*monitor(void *arg);
-
-// --- time.c ---
-int		get_time(void);
-void	smart_sleep(long ms, t_data *data);
-
-// --- utils.c ---
-void	print_status(t_philo *philo, char *msg);
+/* ---------     utils.c ----------*/
 int		ft_atoi(const char *str);
+
+/* ---------     routine.c ----------*/
+void *ft_routine(t_philo *philo);
+
+/* ---------     monitor.c ----------*/
+void	*ft_monitor(t_data *data);
+
+
 
 #endif
