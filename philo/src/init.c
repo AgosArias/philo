@@ -1,0 +1,75 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/12 22:16:48 by aarias-d          #+#    #+#             */
+/*   Updated: 2026/01/12 22:19:18 by aarias-d         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo.h"
+
+int	ft_create_threads(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->num_philo)
+	{
+		if (pthread_create(&data->philo[i].thread, NULL, ft_routine, &data->philo[i]) != 0)
+		{
+			while (--i >= 0)
+				pthread_join(data->philo[i].thread, NULL);
+			return(1);
+		}
+		i++;
+	}
+	return(0);
+}
+
+int	ft_inicial_constants(t_data *data,char *argv)
+{
+	struct timeval	tv;
+
+	data->num_philo = ft_atoi((*argv)++);
+	data->time_to_die = ft_atoi((*argv)++);
+	data->time_to_eat = ft_atoi((*argv)++);
+	data->time_to_sleep = ft_atoi((*argv)++);
+	if(!(*argv))
+		data->number_times_eat = ft_atoi((*argv)++);
+	data->all_alive = 1;
+	if (gettimeofday(&tv, NULL))
+		return (1);
+	data->time_start = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (0);
+
+}
+
+int	ft_init_philos(t_data *data)
+{
+	int	i;
+
+	data->philo = (t_philo *) malloc(sizeof(t_philo) * data->num_philo);
+	i = 0;
+	while (i < data->num_philo)
+	{
+		data->philo[i].id = i + 1;
+		data->philo[i].last_meal = data->time_start;
+		data->philo[i].meals_eaten = 0;
+		i++;
+	}
+	return (0);
+}
+
+int	ft_init_data(t_data *data,  char *argv)
+{
+	/*CHECK INT*/
+	ft_inicial_constants(&data, &argv);
+	ft_init_philos(&data);
+	ft_create_threads(&data);
+
+	return (0);
+}
