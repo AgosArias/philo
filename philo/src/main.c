@@ -5,49 +5,24 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/25 18:01:11 by aarias-d          #+#    #+#             */
-/*   Updated: 2026/01/05 00:17:41 by aarias-d         ###   ########.fr       */
+/*   Created: 2026/01/10 23:10:14 by aarias-d          #+#    #+#             */
+/*   Updated: 2026/01/12 23:05:48 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+
 void	ft_destroy_data(t_data *data)
 {
-	int	i;
-
-	i = -1;
-	if (!data)
+	if(!data)
 		return ;
 	if (data->philo)
 		free(data->philo);
-	if (data->forks)
-	{
-		while (++i < data->num_philo)
-			pthread_mutex_destroy(&data->forks[i]);
-		free(data->forks);
-	}
-}
-int	ft_launch_threads(t_data *data)
-{
-	int i;
 
-	i = 0;
-	while (i< data->num_philo)
-	{
-		if(pthread_create(&data->philo[i].thread, NULL, ft_routine, &data->philo[i]) != 0)
-		{
-			data->all_alive = 0;
-			while (--i >= 0)
-				pthread_join(data->philo[i].thread, NULL);
-			return (1);
-		}
-		i++;
-	}
-	return (0);
 }
 
-static void	ft_join_threads(t_data *data)
+void	ft_join_phthread(t_data *data)
 {
 	int	i;
 
@@ -59,35 +34,31 @@ static void	ft_join_threads(t_data *data)
 	}
 }
 
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
-	pthread_t	mon;
-
-	if (argc != 5 && argc != 6)
+	
+	if (argc != 5 || argc != 6)
 	{
 		write(2, "Bad Arguments\n", 14);
-		exit(EXIT_FAILURE);
+		return (0);
 	}
-	if (ft_init_data(&data, argc, argv) == 1)
-		exit(EXIT_FAILURE);
-
-	if (ft_init_philos(&data) == 1)
-		exit(EXIT_FAILURE);
-	if (ft_launch_threads(&data) == 1)
+	++argv;
+	if (ft_init_data(&data, *argv) == 1)
 	{
 		ft_destroy_data(&data);
-		return (1);
+		exit(EXIT_FAILURE);
 	}
-	if (pthread_create(&mon, NULL, monitor, &data) != 0)
+	if (pthread_create(&data.monitor, NULL, ft_monitor, &data) != 0)
 	{
-		data.all_alive = 0;
-		ft_join_threads(&data);
-		ft_destroy_data(&data);
+		ft_join_phthread(&data);
+		ft_destroy_program(&data);
 		return (1);
 	}
-	pthread_join(mon, NULL);
-	ft_join_threads(&data);
-	ft_destroy_data(&data);
+	pthread_join(&data.monitor, NULL);
+	ft_join_phthread(&data);
+	ft_destroy_program(&data);
 	return (0);
 }
+
