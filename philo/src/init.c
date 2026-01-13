@@ -6,7 +6,7 @@
 /*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/12 22:16:48 by aarias-d          #+#    #+#             */
-/*   Updated: 2026/01/12 22:19:18 by aarias-d         ###   ########.fr       */
+/*   Updated: 2026/01/12 23:56:13 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,13 @@ int	ft_init_philos(t_data *data)
 int	ft_init_data(t_data *data,  char *argv)
 {
 	/*CHECK INT*/
-	ft_inicial_constants(&data, &argv);
-	ft_init_philos(&data);
-	ft_create_threads(&data);
-
+	if(ft_inicial_constants(&data, &argv)!= 0)
+		return(1);
+	if(ft_init_philos(&data) != 0)
+		return(1);
+	if(ft_create_threads(&data) != 0)
+		return(1);
+	if(ft_init_mutexes(&data)!= 0)
+		return(1);
 	return (0);
 }
