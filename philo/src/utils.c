@@ -53,3 +53,27 @@ int	ft_atoi(const char *str)
 	}
 	return (num * symbol);
 }
+
+long	ft_get_time(void)
+{
+	struct timeval	tv;
+	long			time;
+
+	if (gettimeofday(&tv, NULL))
+		return (1);
+	time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+	return (time);
+}
+
+
+void	print_status(t_philo *philo, char *msg)
+{
+	long	now;
+
+	if(!ft_get_all_alive)
+		return ;
+	pthread_mutex_lock(&philo->data->write_lock);
+	now = ft_get_time() - philo->data->time_start;
+	printf("%ld %d %s\n", now, philo->id, msg);
+	pthread_mutex_unlock(&philo->data->write_lock);
+}
