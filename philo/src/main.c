@@ -6,12 +6,15 @@
 /*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/10 23:10:14 by aarias-d          #+#    #+#             */
-/*   Updated: 2026/01/12 23:05:48 by aarias-d         ###   ########.fr       */
+/*   Updated: 2026/01/14 20:07:42 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/*
+3. checkear int 
+*/
 
 void	ft_destroy_data(t_data *data)
 {
@@ -19,7 +22,10 @@ void	ft_destroy_data(t_data *data)
 		return ;
 	if (data->philo)
 		free(data->philo);
-
+	pthread_mutex_destroy(&data->state_lock);
+	pthread_mutex_destroy(&data->write_lock);
+	pthread_mutex_destroy(&data->meal_lock);
+	ft_free_forks(data);
 }
 
 void	ft_join_phthread(t_data *data)
