@@ -40,6 +40,8 @@ int	ft_inicial_constants(t_data *data,char *argv)
 	data->time_to_sleep = ft_atoi((*argv)++);
 	if(!(*argv))
 		data->number_times_eat = ft_atoi((*argv)++);
+	else
+		data->number_times_eat = -1;
 	data->all_alive = 1;
 	if (gettimeofday(&tv, NULL))
 		return (1);
