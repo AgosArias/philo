@@ -22,6 +22,16 @@ int	ft_get_all_alive(t_data *data)
 	pthread_mutex_unlock(&data->state_lock);
 	return live;
 }
+int	ft_set_all_alive(t_data *data, int set)
+{
+	int live;
+
+	live = 0;
+	pthread_mutex_lock(&data->state_lock);
+	data->all_alive = set;
+	pthread_mutex_unlock(&data->state_lock);
+	return live;
+}
 
 void	*ft_routine(void *arg)
 {
