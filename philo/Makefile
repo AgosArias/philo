@@ -1,16 +1,17 @@
 NAME = philo
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -pthread
 INCLUDES = -I includes
 
 SRC_DIR = src
 SRC = 	$(SRC_DIR)/main.c \
+		$(SRC_DIR)/utils.c \
 		$(SRC_DIR)/init.c \
+		$(SRC_DIR)/monitor.c \
 		$(SRC_DIR)/routine.c \
 		$(SRC_DIR)/actions.c \
-		$(SRC_DIR)/monitor.c \
-		$(SRC_DIR)/utils.c 
+		$(SRC_DIR)/mutex.c 
 
 DEPS = includes/philo.h
 

@@ -6,7 +6,7 @@
 /*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 19:25:33 by aarias-d          #+#    #+#             */
-/*   Updated: 2026/01/12 22:26:07 by aarias-d         ###   ########.fr       */
+/*   Updated: 2026/01/13 17:56:12 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,20 @@ int	ft_init_data(t_data *data,  char *argv);
 
 /* ---------     utils.c ----------*/
 int		ft_atoi(const char *str);
+long	ft_get_time(void);
 
 /* ---------     routine.c ----------*/
 void *ft_routine(t_philo *philo);
+int	ft_get_all_alive(t_data *data);
+int	ft_set_all_alive(t_data *data, int set);
 
 /* ---------     monitor.c ----------*/
 void	*ft_monitor(t_data *data);
 
+/* ------------ - main.c - ---------*/
+void	ft_join_phthread(t_data *data);
 
+/* ------------ - mutex.c - ---------*/
+int	ft_init_mutexes(t_data *data);
 
 #endif
