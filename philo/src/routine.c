@@ -52,4 +52,5 @@ void	*ft_routine(void *arg)
 			break;
 		ft_think(philo);
 	}
+	return (NULL);
 }

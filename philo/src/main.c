@@ -16,7 +16,7 @@
 3. checkear int 
 */
 
-void	ft_destroy_data(t_data *data)
+void	ft_destroy_program(t_data *data)
 {
 	if(!data)
 		return ;
@@ -45,15 +45,15 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 	
-	if (argc != 5 || argc != 6)
+	if (argc != 5 && argc != 6)
 	{
 		write(2, "Bad Arguments\n", 14);
 		return (0);
 	}
 	++argv;
-	if (ft_init_data(&data, *argv) == 1)
+	if (ft_init_data(&data, argc, argv) == 1)
 	{
-		ft_destroy_data(&data);
+		ft_destroy_program(&data);
 		exit(EXIT_FAILURE);
 	}
 	if (pthread_create(&data.monitor, NULL, ft_monitor, &data) != 0)
@@ -62,7 +62,7 @@ int	main(int argc, char **argv)
 		ft_destroy_program(&data);
 		return (1);
 	}
-	pthread_join(&data.monitor, NULL);
+	pthread_join(data.monitor, NULL);
 	ft_join_phthread(&data);
 	ft_destroy_program(&data);
 	return (0);

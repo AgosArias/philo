@@ -70,7 +70,7 @@ void	print_status(t_philo *philo, char *msg)
 {
 	long	now;
 
-	if(!ft_get_all_alive)
+	if(ft_get_all_alive(philo->data) == 0)
 		return ;
 	pthread_mutex_lock(&philo->data->write_lock);
 	now = ft_get_time() - philo->data->time_start;

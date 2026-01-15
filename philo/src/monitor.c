@@ -15,9 +15,8 @@
 int	ft_all_ate(t_data *data)
 {
 	int	i;
-	int	me;
 
-	if (!data->number_times_eat)
+	if (data->number_times_eat <= 0)
 		return (0);
 	i = 0;
 	pthread_mutex_lock(&data->meal_lock);
@@ -36,13 +35,13 @@ int	ft_all_ate(t_data *data)
 
 
 
-long	ft_get_lasmeal(t_philo *philo)
+long	ft_get_lastmeal(t_philo *philo)
 {
 	long lm;
 
-	pthread_mutex_lock(&philo->last_meal);
+	pthread_mutex_lock(&philo->data->meal_lock);
 	lm = philo->last_meal;
-	pthread_mutex_unlock(&philo->last_meal);
+	pthread_mutex_unlock(&philo->data->meal_lock);
 	return lm;
 }
 
@@ -58,21 +57,21 @@ void	*ft_monitor(void *arg)
 		while (i < data->num_philo)
 		{
 			if (!ft_get_all_alive(data))
-				return ;
-			if( get_time() - ft_get_lasmeal(&data->philo[i]) >= data->time_to_die)
+				return (NULL);
+			if( ft_get_time() - ft_get_lastmeal(&data->philo[i]) >= data->time_to_die)
 			{
 				ft_set_all_alive(data, 0);
 				pthread_mutex_lock(&data->write_lock);
-				printf("%ld %d died\n", get_time() - data->time_start, i);
+				printf("%ld %d died\n", ft_get_time() - data->time_start, data->philo[i].id);
 				pthread_mutex_unlock(&data->write_lock);
-				return ;
+				return (NULL);
 			}
 			i++;
 		}
 		if (ft_all_ate(data))
 		{
 			ft_set_all_alive(data, 0);
-			return ;
+			return (NULL);
 		}
 		usleep(1000);
 	}

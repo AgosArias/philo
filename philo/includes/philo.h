@@ -6,7 +6,7 @@
 /*   By: aarias-d <aarias-d@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/24 19:25:33 by aarias-d          #+#    #+#             */
-/*   Updated: 2026/01/13 17:56:12 by aarias-d         ###   ########.fr       */
+/*   Updated: 2026/01/15 21:08:07 by aarias-d         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ typedef struct s_philo
 	int				meals_eaten;
 	pthread_t		thread;
 	t_data			*data;
+	pthread_mutex_t	*lf;
+	pthread_mutex_t	*rf;
 }	t_philo;
 
 typedef struct s_data
@@ -48,24 +50,33 @@ typedef struct s_data
 }		t_data;
 
 /* ---------     init.c ----------*/
-int	ft_init_data(t_data *data,  char *argv);
+int	ft_init_data(t_data *data, int argc, char **argv);
 
 /* ---------     utils.c ----------*/
 int		ft_atoi(const char *str);
 long	ft_get_time(void);
+void	print_status(t_philo *philo, char *msg);
+void	smart_sleep(long ms, t_data *data);
 
 /* ---------     routine.c ----------*/
-void *ft_routine(t_philo *philo);
+void *ft_routine(void *arg);
 int	ft_get_all_alive(t_data *data);
 int	ft_set_all_alive(t_data *data, int set);
 
 /* ---------     monitor.c ----------*/
-void	*ft_monitor(t_data *data);
+void	*ft_monitor(void *arg);
 
 /* ------------ - main.c - ---------*/
 void	ft_join_phthread(t_data *data);
 
 /* ------------ - mutex.c - ---------*/
+int ft_free_forks(t_data *data);
 int	ft_init_mutexes(t_data *data);
+
+/* ------------ - mutex.c - ---------*/
+void	ft_think(t_philo *philo);
+void	ft_eat(t_philo *philo);
+void	ft_sleep(t_philo *philo);
+
 
 #endif
